@@ -11,10 +11,10 @@ RUN apt-get update && \
                        php-intl \
                        python3-setuptools python3-dev python3-pip \
                        python3-psycopg2 python3-tidylib phpunit php-cgi \
-                       python-gdal unzip libboost-all-dev \
+                       python-pip python-gdal unzip libboost-all-dev \
                        wget && \
     pear install PHP_CodeSniffer && \
-    pip3 install osmium && \
+    pip install osmium && \
 	  wget https://nominatim.org/release/Nominatim-3.1.0.tar.bz2 && \
 	  tar xf Nominatim-3.1.0.tar.bz2 -C / && \
     rm -f Nominatim-3.1.0.tar.bz2 && \

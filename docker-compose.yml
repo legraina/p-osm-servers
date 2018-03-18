@@ -12,7 +12,7 @@ services:
     container_name: osm-postgis
     image: mdillon/postgis:9.5-alpine
     volumes:
-      # - ./pgdata:/var/lib/pgsql
+       ./data/pgdata:/var/lib/pgsql
       - ./lib/nominatim.so:/nominatim/build/module/nominatim.so
     environment:
       POSTGRES_USER: www-data
@@ -26,14 +26,19 @@ services:
     ports:
       - "8080:80"
     environment:
-      PGDATABASE: ri
-    # command: "-t -o rhode-island-latest.osm.pbf -u https://download.geofabrik.de/north-america/us/rhode-island-updates"
+      PGUSER: www-data
+      PGPASSWORD: password
+      PGDATABASE: dc
+    command:
+      - "-t"
+      - "-o district-of-columbia-latest.osm.pbf"
+      - "-u http://download.geofabrik.de/north-america/us/district-of-columbia-updates/"
 
   graphhopper:
     container_name: osm-graphhopper
     image: graphhopper/graphhopper
     volumes:
-      - ./data/ri:/data
-    environment:
-      JETTY_PORT: 80
-    command: "/data/rhode-island-latest.osm.pbf"
+      - ./data/dc:/data
+    ports:
+      - "11111:11111"
+    command: "/data/district-of-columbia-latest.osm.pbf"
