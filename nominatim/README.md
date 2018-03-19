@@ -10,7 +10,7 @@ Supported Tags
 - latest
 - 9.5
 
-The versions corresponds to the postgresql database version that needs to be used with this image.
+The version corresponds to the postgresql database version that needs to be used with this image.
 
 Usage
 -------------
