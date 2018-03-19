@@ -7,16 +7,18 @@ services:
       - ./nginx.conf:/etc/nginx/conf.d/default.conf
     ports:
       - "80:80"
+    restart: always
 
   postgis:
     container_name: osm-postgis
     image: mdillon/postgis:9.5-alpine
     volumes:
-      - ./data/pgdata:/var/lib/pgsql
+      - ./data/pgdata:/var/lib/postgresql/data
       - ./lib/nominatim.so:/nominatim/build/module/nominatim.so
     environment:
       POSTGRES_USER: www-data
       POSTGRES_PASSWORD: password
+    restart: always
 
   nominatim:
     container_name: osm-nominatim
@@ -39,4 +41,5 @@ services:
       - ./data/dc:/data
     # ports:
     #   - "11111:11111"
+    restart: always
     command: /data/district-of-columbia-latest.osm.pbf
