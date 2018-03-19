@@ -1,5 +1,5 @@
 OSM SERVERS
----------------------
+=====================
 The configuration proposed here allows to run graphhopper and nominatim on the same machine. There are four containers:
 - nginx: this container is simply used to redirect nominatim requests to the nominatim container, and the other requests to graphhopper.
 - graphhopper: this container returns the route associated to two gps positions. See https://www.graphhopper.com/open-source/ for more information.
