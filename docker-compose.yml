@@ -20,7 +20,7 @@ services:
 
   nominatim:
     container_name: osm-nominatim
-    build: ./nominatim/
+    image: legraina/nominatim:9.5
     volumes:
       - ./data/dc:/data
     # ports:
