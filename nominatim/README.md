@@ -1,5 +1,5 @@
 NOMINATIN DOCKER
----------------------
+===================
 
 This image contains a nominatim apache server (https://wiki.openstreetmap.org/wiki/Nominatim).
 However, to be able to use the nominatim service, you must connect this image to a postgis database.
