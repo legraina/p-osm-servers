@@ -24,6 +24,8 @@ If you want to run continuous updates for nominatim, you should find the path to
 Finally, you can load different map in both server and switch between them.
 For graphhopper, just change the input files. For nominatim, you must change the environment variable for the database (PGDATABASE) to point to the right database.
 
+Note, that git lfs is used for storing the data. You need to use git-lfs pull to download the data repository.
+
 Usage
 -------------------
 First start all the services with:
