@@ -10,7 +10,7 @@ Supported Tags
 - latest
 - 9.5
 
-The versions corresponds to the postgresql database version that needs to be used with this image.
+The version corresponds to the postgresql database version that needs to be used with this image.
 
 Usage
 -------------
@@ -32,6 +32,6 @@ Flags
 ------
 Available flags in the command:
 - -h | --help: display the help message.
-- -o | --osm-file: OSM file in the input to use for the initial import (must be download here: https://download.geofabrik.de/). Default: None.
-- -t | --tiger: folder where the zip files are located for TIGER. Default: None.
-- -u | --update: url used for conitnuously updating the OSM data in the postgresql db. Default: None.
+- -o | --osm-file: OSM file in the input to use for the initial import (can be download here: https://download.geofabrik.de/). Default: None.
+- -t | --tiger: folder where the zip files are located for TIGER (can be found here: https://www.census.gov/cgi-bin/geo/shapefiles/index.php). Default: None.
+- -u | --update: url used for conitnuously updating the OSM data in the postgresql db (can also be found here: https://download.geofabrik.de/). Default: None.
