@@ -22,20 +22,21 @@ services:
     container_name: osm-nominatim
     build: ./nominatim/
     volumes:
-      - ./data/ri:/data
-    ports:
-      - "8080:80"
+      - ./data/dc:/data
+    # ports:
+    #   - "8080:80"
     environment:
       PGUSER: www-data
       PGPASSWORD: password
       PGDATABASE: dc
-    command: -t -o district-of-columbia-latest.osm.pbf -u http://download.geofabrik.de/north-america/us/district-of-columbia-updates/
+    restart: always
+    command: -t /data/tiger -o /data/district-of-columbia-latest.osm.pbf -u http://download.geofabrik.de/north-america/us/district-of-columbia-updates/
 
   graphhopper:
     container_name: osm-graphhopper
     image: graphhopper/graphhopper
     volumes:
       - ./data/dc:/data
-    ports:
-      - "11111:11111"
+    # ports:
+    #   - "11111:11111"
     command: /data/district-of-columbia-latest.osm.pbf
