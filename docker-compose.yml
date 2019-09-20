@@ -9,37 +9,57 @@ services:
       - "80:80"
     restart: always
 
-  postgis:
-    container_name: osm-postgis
-    image: mdillon/postgis:9.5-alpine
-    volumes:
-      - ./data/pgdata:/var/lib/postgresql/data
-      - ./lib/nominatim.so:/nominatim/build/module/nominatim.so
-    environment:
-      POSTGRES_USER: www-data
-      POSTGRES_PASSWORD: password
-    restart: always
+  # postgis:
+  #   container_name: osm-postgis
+  #   image: mdillon/postgis:9.5-alpine
+  #   volumes:
+  #     - ./data/pgdata:/var/lib/postgresql/data
+  #     - ./lib/nominatim.so:/nominatim/build/module/nominatim.so
+  #   environment:
+  #     POSTGRES_USER: www-data
+  #     POSTGRES_PASSWORD: password
+  #   restart: always
 
-  nominatim:
-    container_name: osm-nominatim
-    image: legraina/nominatim:9.5
+  osrm-qc:
+    container_name: osm-osrm-qc
+    image: osrm/osrm-backend
     volumes:
-      - ./data/dc:/data
-    # ports:
-    #   - "8080:80"
-    environment:
-      PGUSER: www-data
-      PGPASSWORD: password
-      PGDATABASE: dc
-    restart: always
-    command: -t /data/tiger -o /data/district-of-columbia-latest.osm.pbf -u http://download.geofabrik.de/north-america/us/district-of-columbia-updates/
-
-  graphhopper:
-    container_name: osm-graphhopper
-    image: graphhopper/graphhopper
-    volumes:
-      - ./data/dc:/data
+      - ./data/qc:/data
     # ports:
     #   - "11111:11111"
     restart: always
-    command: /data/district-of-columbia-latest.osm.pbf
+    command: /data/quebec-latest.osm.pbf
+
+  osrm-ny:
+    container_name: osm-osrm-ny
+    image: osrm/osrm-backend
+    volumes:
+      - ./data/ny:/data
+    # ports:
+    #   - "11111:11111"
+    restart: always
+    command: /data/new-york-latest.osm.pbf
+
+  # nominatim:
+  #   container_name: osm-nominatim
+  #   image: legraina/nominatim:9.5
+  #   volumes:
+  #     - ./data/dc:/data
+  #   # ports:
+  #   #   - "8080:80"
+  #   environment:
+  #     PGUSER: www-data
+  #     PGPASSWORD: password
+  #     PGDATABASE: dc
+  #   restart: always
+  #   command: -t /data/tiger -o /data/district-of-columbia-latest.osm.pbf -u http://download.geofabrik.de/north-america/us/district-of-columbia-updates/
+  #
+  # osrm:
+  #   container_name: osm-osrm
+  #   image: osrm/osrm-backend
+  #   volumes:
+  #     - ./data/dc:/data
+  #   # ports:
+  #   #   - "11111:11111"
+  #   restart: always
+  #   command: /data/district-of-columbia-latest.osm.pbf
