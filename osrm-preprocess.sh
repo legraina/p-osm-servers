@@ -10,17 +10,20 @@ function printBashUsage {
   echo "-h | --help: display this message"
   echo "-i | --instance: name of the osm.pbf file to process (without extansion). Default: district-of-columbia-latest."
   echo "-d | --data: path to the local directory used for the data. Default: ./data/dc."
+  echo "-a | --algorithm: algorithm used by osrm (mld or ch). Default: mld."
 }
 
 # load arguments
 instance="district-of-columbia-latest"
 data="./data/dc"
+algorithm="mld"
 while [ ! -z $1 ]; do
   case $1 in
     -h|--help) printBashUsage
       exit 1;;
     -i | --instance) instance=$2; shift 2;;
 		-d | --data) data=$2; shift 2;;
+    -a | --algorithm) algorithm=$2; shift 2;;
     -*|--*) echo "Option unknown: $1"; shift 2;;
     *) echo "Cannot parse this argument: $1"
       printBashUsage
@@ -53,5 +56,9 @@ fi
 
 # run docker commands
 docker run -t -v "${data}:/data" osrm/osrm-backend osrm-extract -p /opt/car.lua /data/$instance.osm.pbf
-docker run -t -v "${data}:/data" osrm/osrm-backend osrm-partition /data/$instance.osrm
-docker run -t -v "${data}:/data" osrm/osrm-backend osrm-customize /data/$instance.osrm
+if [ $algorithm == "ch" ]; then
+  docker run -t -v "${data}:/data" osrm/osrm-backend osrm-contract /data/$instance.osrm
+else
+  docker run -t -v "${data}:/data" osrm/osrm-backend osrm-partition /data/$instance.osrm
+  docker run -t -v "${data}:/data" osrm/osrm-backend osrm-customize /data/$instance.osrm
+fi
